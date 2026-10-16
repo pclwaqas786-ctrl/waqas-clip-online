@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Waqas Clip Online — Long Video to Viral Shorts</title>
+<style>
+:root{
+  --bg:#0f1117; --card:#1a1d27; --card2:#222636; --border:#2e3348;
+  --txt:#eef0f8; --muted:#9aa0b8; --acc:#6c5ce7; --acc2:#00d2a0;
+  --red:#ff5c7a; --amber:#ffb020;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+body{margin:0; background:var(--bg); color:var(--txt); font-family:'Segoe UI',system-ui,-apple-system,sans-serif; font-size:15px; line-height:1.5}
+.wrap{max-width:920px; margin:0 auto; padding:16px 14px 60px}
+header.top{display:flex; align-items:center; gap:12px; padding:14px 0; border-bottom:1px solid var(--border); margin-bottom:18px}
+.logo{width:44px; height:44px; border-radius:12px; background:linear-gradient(135deg,var(--acc),#a855f7); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:900}
+header.top h1{margin:0; font-size:20px}
+header.top p{margin:2px 0 0; color:var(--muted); font-size:12.5px}
+.card{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:16px; margin-bottom:14px}
+.card h2{margin:0 0 4px; font-size:16px}
+.card .sub{color:var(--muted); font-size:13px; margin:0 0 12px}
+.step{display:flex; align-items:center; gap:10px; margin-bottom:10px}
+.stepnum{width:28px; height:28px; border-radius:50%; background:var(--acc); color:#fff; font-weight:800; font-size:14px; display:flex; align-items:center; justify-content:center; flex:none}
+.step.done .stepnum{background:var(--acc2)}
+.btn{display:inline-block; background:var(--acc); color:#fff; border:none; border-radius:10px; padding:12px 22px; font-size:15px; font-weight:700; cursor:pointer; width:100%; margin-top:8px}
+.btn:active{transform:scale(.98)}
+.btn:disabled{background:#3a3f55; color:#777; cursor:not-allowed}
+.btn.ghost{background:var(--card2); border:1px solid var(--border)}
+.btn.green{background:var(--acc2)}
+input[type=text],input[type=password],input[type=number],select{width:100%; background:var(--card2); border:1px solid var(--border); color:var(--txt); border-radius:10px; padding:11px 12px; font-size:15px; margin:6px 0}
+label.lbl{display:block; font-size:13px; color:var(--muted); margin-top:10px}
+.row{display:flex; gap:10px}
+.row>*{flex:1}
+video.preview{width:100%; border-radius:10px; background:#000; max-height:52vh}
+.hidden{display:none!important}
+.progress{height:8px; background:var(--card2); border-radius:6px; overflow:hidden; margin:10px 0}
+.progress>i{display:block; height:100%; background:linear-gradient(90deg,var(--acc),var(--acc2)); width:0%; transition:width .3s}
+.status{font-size:13.5px; color:var(--muted); margin:8px 0}
+.status b{color:var(--txt)}
+.transcript{background:#11141d; border:1px solid var(--border); border-radius:10px; padding:12px; max-height:220px; overflow-y:auto; font-size:13.5px; line-height:1.7; margin-top:10px}
+.transcript .w{cursor:pointer; border-radius:4px; padding:1px 2px}
+.transcript .w:hover{background:#2a2f45}
+.moment{border:1px solid var(--border); border-radius:12px; padding:12px; margin:10px 0; background:var(--card2); cursor:pointer}
+.moment.sel{border-color:var(--acc2); box-shadow:0 0 0 1px var(--acc2)}
+.moment .ttl{font-weight:700; font-size:14.5px}
+.moment .meta{font-size:12.5px; color:var(--muted)}
+.moment .score{display:inline-block; background:var(--acc); border-radius:20px; padding:2px 10px; font-size:12px; font-weight:700; margin-left:8px}
+canvas#stage{width:100%; border-radius:10px; background:#000; touch-action:none}
+.capstyle{display:flex; gap:8px; margin:10px 0}
+.capstyle button{flex:1; padding:10px 4px; border-radius:10px; border:1px solid var(--border); background:var(--card2); color:var(--txt); font-weight:700; cursor:pointer; font-size:13px}
+.capstyle button.sel{border-color:var(--acc); background:#2a2350}
+.hint{font-size:12.5px; color:var(--muted); background:#141824; border-radius:8px; padding:10px 12px; margin-top:10px}
+.hint a{color:var(--acc2)}
+.err{background:#3a1520; border:1px solid var(--red); color:#ffb3c1; border-radius:10px; padding:10px 12px; font-size:13.5px; margin-top:10px}
+.ok{background:#0f2e26; border:1px solid var(--acc2); color:#9ff0d8; border-radius:10px; padding:10px 12px; font-size:13.5px; margin-top:10px}
+footer{color:var(--muted); font-size:12px; text-align:center; margin-top:26px}
+.kbd{background:#2a2f45; border-radius:6px; padding:1px 7px; font-size:12.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="logo">✂</div>
+  <div><h1>Waqas Clip Online</h1><p>Long video → viral shorts · online, koi install nahi</p></div>
+</header>
+
+<!-- STEP 0: API KEY -->
+<div class="card" id="card-key">
+  <div class="step" id="step-key"><div class="stepnum">1</div><h2 style="margin:0">Gemini API Key</h2></div>
+  <p class="sub">Free key — <a href="https://aistudio.google.com/apikey" target="_blank" style="color:var(--acc2)">aistudio.google.com/apikey</a> se lein, yahan paste karein. Browser me save rahegi.</p>
+  <input type="password" id="apikey" placeholder="AIza...">
+  <div class="row">
+    <div><label class="lbl">Model</label><input type="text" id="model" value="gemini-3-flash-preview"></div>
+  </div>
+  <button class="btn" id="btn-savekey">Save Key</button>
+  <div id="key-msg"></div>
+</div>
+
+<!-- STEP 1: UPLOAD -->
+<div class="card hidden" id="card-upload">
+  <div class="step" id="step-upload"><div class="stepnum">2</div><h2 style="margin:0">Video Upload</h2></div>
+  <p class="sub">Apni long video select karein (MP4, WebM — 10 min tak behtar).</p>
+  <input type="file" id="file" accept="video/*" style="margin-bottom:10px">
+  <video class="preview hidden" id="vprev" controls playsinline></video>
+  <div class="status" id="vinfo"></div>
+</div>
+
+<!-- STEP 2: TRANSCRIBE -->
+<div class="card hidden" id="card-trans">
+  <div class="step" id="step-trans"><div class="stepnum">3</div><h2 style="margin:0">Transcribe</h2></div>
+  <p class="sub">Gemini audio sun ke word-by-word transcript banayega (timestamps ke saath).</p>
+  <button class="btn" id="btn-trans">🎙 Transcribe Karo</button>
+  <div class="progress hidden" id="tprog"><i></i></div>
+  <div class="status" id="tstatus"></div>
+  <div class="transcript hidden" id="transcript"></div>
+</div>
+
+<!-- STEP 3: VIRAL MOMENTS -->
+<div class="card hidden" id="card-moments">
+  <div class="step" id="step-moments"><div class="stepnum">4</div><h2 style="margin:0">Viral Moments</h2></div>
+  <p class="sub">AI transcript parh ke best short clips suggest karega. Ek select karein.</p>
+  <button class="btn" id="btn-moments">🔥 Viral Moments Dhoondo</button>
+  <div class="status" id="mstatus"></div>
+  <div id="moments"></div>
+</div>
+
+<!-- STEP 4: EDITOR -->
+<div class="card hidden" id="card-edit">
+  <div class="step" id="step-edit"><div class="stepnum">5</div><h2 style="margin:0">Clip Editor</h2></div>
+  <div class="row">
+    <div><label class="lbl">Start (sec)</label><input type="number" id="cstart" step="0.1" min="0" value="0"></div>
+    <div><label class="lbl">End (sec)</label><input type="number" id="cend" step="0.1" min="1" value="30"></div>
+  </div>
+  <label class="lbl">Caption style</label>
+  <div class="capstyle">
+    <button data-cs="pop" class="sel">POP</button>
+    <button data-cs="boxed">BOXED</button>
+    <button data-cs="classic">CLASSIC</button>
+  </div>
+  <label class="lbl">9:16 framing — crop ko drag karein</label>
+  <canvas id="stage" width="540" height="960"></canvas>
+  <div class="hint">👆 Canvas pe ungli/mouse drag kar ke framing adjust karein. Preview neeche video me chal raha hai.</div>
+  <button class="btn ghost" id="btn-preview">▶ Preview Dekho</button>
+</div>
+
+<!-- STEP 5: EXPORT -->
+<div class="card hidden" id="card-export">
+  <div class="step" id="step-export"><div class="stepnum">6</div><h2 style="margin:0">Export Short</h2></div>
+  <p class="sub">1080×1920 vertical video, animated captions ke saath.</p>
+  <button class="btn green" id="btn-export">⬇ Short Export Karo</button>
+  <div class="progress hidden" id="eprog"><i></i></div>
+  <div class="status" id="estatus"></div>
+  <div id="dl-area"></div>
+</div>
+
+<footer>Waqas Clip Online · apki key, apka data — kuch server pe save nahi hota</footer>
+</div>
+
+<script>
+"use strict";
+/* ============ STATE ============ */
+const S = {
+  key: localStorage.getItem('wc_key') || '',
+  model: localStorage.getItem('wc_model') || 'gemini-3-flash-preview',
+  file: null, videoURL: '', duration: 0,
+  words: [],           // {w,s,e}
+  moments: [],         // {start,end,score,title,hook}
+  clip: {start:0, end:30},
+  capStyle: 'pop',
+  cropX: 0.5,          // 0..1 horizontal position of 9:16 window
+  exporting: false,
+};
+const $ = id => document.getElementById(id);
+
+/* ============ API KEY ============ */
+if (S.key) { $('apikey').value = S.key; $('model').value = S.model; unlockUpload(); }
+$('btn-savekey').onclick = () => {
+  const k = $('apikey').value.trim();
+  if (!k || k.length < 10) { $('key-msg').innerHTML = '<div class="err">Sahi API key dalein.</div>'; return; }
+  S.key = k; S.model = $('model').value.trim() || 'gemini-3-flash-preview';
+  localStorage.setItem('wc_key', S.key); localStorage.setItem('wc_model', S.model);
+  $('key-msg').innerHTML = '<div class="ok">✓ Key save ho gayi.</div>';
+  $('step-key').classList.add('done');
+  unlockUpload();
+};
+function unlockUpload(){ $('card-upload').classList.remove('hidden'); }
+function gurl(){ return `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(S.model)}:generateContent?key=${encodeURIComponent(S.key)}`; }
+async function gcall(body, tries=4){
+  let lastErr;
+  for (let a=0; a<tries; a++){
+    try {
+      const r = await fetch(gurl(), {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+      if (r.status === 503 || r.status === 429){ lastErr = new Error('Model busy ('+r.status+'), dobara try ho raha hai...'); await sleep(2500*(a+1)); continue; }
+      if (!r.ok){ const t = await r.text(); throw new Error('Gemini error '+r.status+': '+t.slice(0,200)); }
+      return r.json();
+    } catch(e){
+      lastErr = e;
+      if (a < tries-1 && /busy|fetch|network/i.test(e.message)) await sleep(2500*(a+1));
+      else throw e;
+    }
+  }
+  throw lastErr;
+}
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+/* ============ UPLOAD ============ */
+$('file').onchange = e => {
+  const f = e.target.files[0]; if (!f) return;
+  S.file = f;
+  if (S.videoURL) URL.revokeObjectURL(S.videoURL);
+  S.videoURL = URL.createObjectURL(f);
+  const v = $('vprev'); v.src = S.videoURL; v.classList.remove('hidden');
+  v.onloadedmetadata = () => {
+    S.duration = v.duration;
+    $('vinfo').innerHTML = `📹 <b>${f.name}</b> · ${(f.size/1048576).toFixed(1)} MB · ${fmtT(v.duration)} · ${v.videoWidth}×${v.videoHeight}`;
+    $('cend').value = Math.min(60, v.duration).toFixed(1);
+    S.clip.end = Math.min(60, v.duration);
+    $('card-trans').classList.remove('hidden');
+    $('step-upload').classList.add('done');
+  };
+};
+function fmtT(s){ s=Math.max(0,s); const m=Math.floor(s/60), ss=(s%60).toFixed(1); return m+':'+String(ss).padStart(4,'0'); }
+
+/* ============ AUDIO EXTRACT (16kHz mono WAV) ============ */
+async function extractAudio(){
+  const buf = await S.file.arrayBuffer();
+  const AC = window.AudioContext || window.webkitAudioContext;
+  const ac = new AC();
+  const audioBuf = await ac.decodeAudioData(buf);
+  const targetSR = 16000;
+  const dur = Math.min(audioBuf.duration, 600); // max 10 min
+  const len = Math.floor(dur * targetSR);
+  const OffCtx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+  const off = new OffCtx(1, len, targetSR);
+  const src = off.createBufferSource(); src.buffer = audioBuf;
+  // downmix to mono automatically by connecting to mono destination
+  src.connect(off.destination); src.start(0, 0, dur);
+  const rendered = await off.startRendering();
+  const data = rendered.getChannelData(0);
+  ac.close();
+  return encodeWAV(data, targetSR);
+}
+function encodeWAV(samples, sr){
+  const b = new ArrayBuffer(44 + samples.length*2), v = new DataView(b);
+  const ws=(o,s)=>{for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i))};
+  ws(0,'RIFF'); v.setUint32(4,36+samples.length*2,true); ws(8,'WAVEfmt ');
+  v.setUint32(16,16,true); v.setUint16(20,1,true); v.setUint16(22,1,true);
+  v.setUint32(24,sr,true); v.setUint32(28,sr*2,true); v.setUint16(32,2,true); v.setUint16(34,16,true);
+  ws(36,'data'); v.setUint32(40,samples.length*2,true);
+  for(let i=0;i<samples.length;i++){ const s=Math.max(-1,Math.min(1,samples[i])); v.setInt16(44+i*2, s<0?s*0x8000:s*0x7FFF, true); }
+  return new Blob([b], {type:'audio/wav'});
+}
+function blobToB64(blob){ return new Promise(res=>{ const r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.readAsDataURL(blob); }); }
+
+/* ============ TRANSCRIBE ============ */
+$('btn-trans').onclick = async () => {
+  if (!S.file) return;
+  const btn = $('btn-trans'); btn.disabled = true;
+  $('tprog').classList.remove('hidden'); $('transcript').classList.add('hidden');
+  try {
+    setProg('tprog', 10); $('tstatus').innerHTML = '🎧 Audio nikal rahe hain...';
+    const wav = await extractAudio();
+    if (wav.size > 18*1048576) throw new Error('Audio bohat bara hai ('+(wav.size/1048576).toFixed(0)+'MB). Chhoti video try karein.');
+    setProg('tprog', 35); $('tstatus').innerHTML = '☁ Gemini ko bhej rahe hain...';
+    const b64 = await blobToB64(wav);
+    setProg('tprog', 55); $('tstatus').innerHTML = '✍ Transcribe ho raha hai...';
+    const out = await gcall({
+      contents:[{parts:[
+        {text:'Transcribe this audio completely. Return ONLY JSON: {"words":[{"w":word,"s":start_seconds,"e":end_seconds}]}. No markdown, no explanation.'},
+        {inline_data:{mime_type:'audio/wav', data:b64}}
+      ]}],
+      generationConfig:{response_mime_type:'application/json', maxOutputTokens:60000}
+    });
+    setProg('tprog', 90);
+    const txt = out.candidates[0].content.parts[0].text;
+    const j = JSON.parse(extractJSON(txt));
+    S.words = j.words || [];
+    if (!S.words.length) throw new Error('Koi lafz nahi mile.');
+    renderTranscript();
+    setProg('tprog', 100);
+    $('tstatus').innerHTML = `✓ <b>${S.words.length}</b> alfaaz mile.`;
+    $('step-trans').classList.add('done');
+    $('card-moments').classList.remove('hidden');
+  } catch(err){
+    $('tstatus').innerHTML = '';
+    $('tprog').classList.add('hidden');
+    showErr('tstatus', err);
+  }
+  btn.disabled = false;
+};
+function renderTranscript(){
+  const el = $('transcript'); el.classList.remove('hidden'); el.innerHTML = '';
+  S.words.forEach((w,i)=>{
+    const s = document.createElement('span'); s.className='w'; s.textContent = w.w+' ';
+    s.title = fmtT(w.s);
+    s.onclick = ()=>{ const v=$('vprev'); v.currentTime = w.s; v.play(); };
+    el.appendChild(s);
+  });
+}
+function setProg(id, p){ const bar = $(id); bar.classList.remove('hidden'); bar.firstElementChild.style.width = p+'%'; }
+function showErr(afterId, err){
+  const d = document.createElement('div'); d.className='err';
+  d.textContent = 'Masla: ' + (err.message||err);
+  $(afterId).appendChild(d);
+}
+
+/* ============ VIRAL MOMENTS ============ */
+$('btn-moments').onclick = async () => {
+  const btn = $('btn-moments'); btn.disabled = true;
+  $('mstatus').textContent = '🔥 AI transcript parh raha hai...';
+  try {
+    const plain = S.words.map(w=>w.w).join(' ');
+    const timed = S.words.filter((_,i)=>i%8===0).map(w=>`[${w.s.toFixed(0)}s] ${w.w}`).join(' ');
+    const promptText = "You are a viral short-video editor. Transcript (" + S.words.length + " words, " + fmtT(S.duration) + " total):\n\n"
+      + plain.slice(0,6000) + "\n\nWord timestamps (sample): " + timed.slice(0,2000)
+      + "\n\nSuggest 3 viral moments for standalone shorts (25-55 seconds each). Each must have a strong hook in first 3 seconds. Reply with ONLY a JSON object, no markdown fences, no explanation: "
+      + '{"moments":[{"start":sec,"end":sec,"score":1-100,"title":short,"hook":first_line}]}';
+    const out = await gcall({
+      contents: [{ parts: [{ text: promptText }] }],
+      generationConfig: { maxOutputTokens: 2000 }
+    });
+    const raw = out.candidates[0].content.parts[0].text;
+    const j = JSON.parse(extractJSON(raw));
+    S.moments = (j.moments||[]).filter(m=>m.end>m.start && m.start>=0);
+    if (!S.moments.length) throw new Error('Koi moment nahi mila.');
+    renderMoments();
+    $('mstatus').innerHTML = `✓ <b>${S.moments.length}</b> viral moments mile.`;
+    $('step-moments').classList.add('done');
+    $('card-edit').classList.remove('hidden');
+    $('card-export').classList.remove('hidden');
+    selectMoment(0);
+  } catch(err){ showErr('mstatus', err); }
+  btn.disabled = false;
+};
+function renderMoments(){
+  const el = $('moments'); el.innerHTML = '';
+  S.moments.forEach((m,i)=>{
+    const d = document.createElement('div'); d.className='moment'; d.dataset.i=i;
+    d.innerHTML = `<div class="ttl">${esc(m.title)}<span class="score">${m.score}</span></div>
+      <div class="meta">⏱ ${fmtT(m.start)} → ${fmtT(m.end)} (${(m.end-m.start).toFixed(0)}s) · 🪝 ${esc(m.hook||'')}</div>`;
+    d.onclick = ()=>selectMoment(i);
+    el.appendChild(d);
+  });
+}
+function selectMoment(i){
+  document.querySelectorAll('.moment').forEach((d,j)=>d.classList.toggle('sel', j===i));
+  const m = S.moments[i];
+  S.clip.start = +m.start.toFixed(1); S.clip.end = +m.end.toFixed(1);
+  $('cstart').value = S.clip.start; $('cend').value = S.clip.end;
+  drawFrame(S.clip.start);
+}
+function esc(s){ return String(s||'').replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function extractJSON(t){
+  // strip markdown fences if present, then grab the outermost {...}
+  t = String(t).replace(/```json\s*/gi,'').replace(/```/g,'').trim();
+  const a = t.indexOf('{'), b = t.lastIndexOf('}');
+  if (a>=0 && b>a) return t.slice(a, b+1);
+  return t;
+}
+$('cstart').onchange = e=>{ S.clip.start = Math.max(0, +e.target.value||0); drawFrame(S.clip.start); };
+$('cend').onchange = e=>{ S.clip.end = Math.min(S.duration, +e.target.value||30); };
+
+/* ============ CAPTION STYLES ============ */
+document.querySelectorAll('.capstyle button').forEach(b=>{
+  b.onclick = ()=>{
+    document.querySelectorAll('.capstyle button').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel'); S.capStyle = b.dataset.cs;
+    drawFrame($('vprev').currentTime || S.clip.start);
+  };
+});
+
+/* ============ 9:16 CANVAS RENDER ============ */
+const stage = $('stage');
+const SW = 540, SH = 960;
+// active drawing context (stage for preview, hi-res canvas for export)
+let ctx = stage.getContext('2d');
+let CW = SW, CHH = SH;
+let dragX = null;
+stage.addEventListener('pointerdown', e=>{ dragX = e.clientX; stage.setPointerCapture(e.pointerId); });
+stage.addEventListener('pointermove', e=>{
+  if (dragX===null) return;
+  const r = stage.getBoundingClientRect();
+  S.cropX -= (e.clientX - dragX) / r.width * 0.6;
+  S.cropX = Math.max(0, Math.min(1, S.cropX));
+  dragX = e.clientX;
+  drawFrame(lastT);
+});
+stage.addEventListener('pointerup', ()=>dragX=null);
+let lastT = 0;
+
+function wordsAt(t){
+  // group words into caption chunks (~7 words), return active chunk + active word idx
+  const CH = 7;
+  for (let c=0; c*CH < S.words.length; c++){
+    const chunk = S.words.slice(c*CH, c*CH+CH);
+    if (!chunk.length) break;
+    if (t >= chunk[0].s && t <= chunk[chunk.length-1].e + 0.4){
+      let ai = 0;
+      chunk.forEach((w,i)=>{ if (t >= w.s) ai = i; });
+      return {chunk, ai};
+    }
+  }
+  return null;
+}
+function drawFrame(t){
+  lastT = t;
+  ctx = stage.getContext('2d'); CW = SW; CHH = SH;
+  const v = $('vprev');
+  if (!v.videoWidth) return;
+  drawVideoFrame(v);
+  drawCaptions(t);
+}
+function drawVideoFrame(v){
+  // 9:16 crop from source
+  const targetAR = 9/16, srcAR = v.videoWidth / v.videoHeight;
+  let cw, ch, cx, cy;
+  if (srcAR > targetAR){ ch = v.videoHeight; cw = ch*targetAR; cy = 0; cx = (v.videoWidth-cw)*S.cropX; }
+  else { cw = v.videoWidth; ch = cw/targetAR; cx = 0; cy = (v.videoHeight-ch)*0.35; }
+  ctx.fillStyle = '#000'; ctx.fillRect(0,0,CW,CHH);
+  try { ctx.drawImage(v, cx, cy, cw, ch, 0, 0, CW, CHH); } catch(e){}
+}
+function drawCaptions(t){
+  const info = wordsAt(t); if (!info) return;
+  const {chunk, ai} = info;
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  const fs = CW / 540; // scale factor relative to 540-wide stage
+  const cy = CHH*0.72;
+  if (S.capStyle === 'pop'){
+    let x = CW/2 - measureChunk(chunk)/2;
+    chunk.forEach((w,i)=>{
+      const active = i===ai;
+      ctx.font = `800 ${Math.round((active?52:40)*fs)}px Segoe UI, sans-serif`;
+      const tw = ctx.measureText(w.w+' ').width;
+      if (active){ ctx.fillStyle='#ffe600'; ctx.strokeStyle='#000'; ctx.lineWidth=8*fs; }
+      else { ctx.fillStyle='#fff'; ctx.strokeStyle='#000'; ctx.lineWidth=6*fs; }
+      const wx = x + tw/2;
+      ctx.strokeText(w.w, wx, cy); ctx.fillText(w.w, wx, cy);
+      x += tw;
+    });
+  } else if (S.capStyle === 'boxed'){
+    const text = chunk.map(w=>w.w).join(' ');
+    ctx.font = `700 ${Math.round(38*fs)}px Segoe UI, sans-serif`;
+    const tw = Math.min(ctx.measureText(text).width+36*fs, CW-60*fs);
+    ctx.fillStyle = 'rgba(0,0,0,.65)';
+    roundRect(ctx, (CW-tw)/2, cy-38*fs, tw, 76*fs, 14*fs); ctx.fill();
+    let x = CW/2 - ctx.measureText(text).width/2;
+    chunk.forEach((w,i)=>{
+      const ww = ctx.measureText(w.w+' ').width;
+      ctx.fillStyle = i===ai ? '#ffe600' : '#fff';
+      ctx.fillText(w.w, x+ww/2, cy);
+      x += ww;
+    });
+  } else {
+    const text = chunk.map((w,i)=>i===ai? w.w.toUpperCase():w.w).join(' ');
+    ctx.font = `800 ${Math.round(42*fs)}px Segoe UI, sans-serif`;
+    ctx.fillStyle='#fff'; ctx.strokeStyle='#000'; ctx.lineWidth=7*fs;
+    wrapText(ctx, text, CW/2, cy, CW-80*fs, 54*fs);
+  }
+}
+function measureChunk(chunk){
+  const fs = CW / 540;
+  ctx.font = `800 ${Math.round(40*fs)}px Segoe UI, sans-serif`;
+  return chunk.reduce((a,w)=>a+ctx.measureText(w.w+' ').width, 0);
+}
+function roundRect(c,x,y,w,h,r){ c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); }
+function wrapText(c, text, x, y, maxW, lh){
+  const words = text.split(' '); let line='', yy=y;
+  const lines=[];
+  words.forEach(w=>{ const t=line+w+' '; if(c.measureText(t).width>maxW && line){ lines.push(line); line=w+' '; } else line=t; });
+  lines.push(line);
+  yy = y - (lines.length-1)*lh/2;
+  lines.forEach(l=>{ c.strokeText(l.trim(), x, yy); c.fillText(l.trim(), x, yy); yy+=lh; });
+}
+
+/* ============ PREVIEW ============ */
+let pvTimer = null;
+$('btn-preview').onclick = ()=>{
+  const v = $('vprev');
+  v.currentTime = S.clip.start; v.play();
+  clearInterval(pvTimer);
+  pvTimer = setInterval(()=>{
+    if (v.currentTime >= S.clip.end || v.ended){ v.pause(); clearInterval(pvTimer); return; }
+    drawFrame(v.currentTime);
+  }, 66);
+  drawFrame(S.clip.start);
+};
+// live frame while seeking
+$('vprev').addEventListener('seeked', ()=>drawFrame($('vprev').currentTime));
+
+/* ============ EXPORT ============ */
+$('btn-export').onclick = async ()=>{
+  if (S.exporting) return;
+  const v = $('vprev');
+  S.clip.start = +$('cstart').value || 0;
+  S.clip.end = +$('cend').value || 30;
+  if (S.clip.end <= S.clip.start){ alert('End time start se bara hona chahiye.'); return; }
+  S.exporting = true;
+  const btn = $('btn-export'); btn.disabled = true;
+  $('eprog').classList.remove('hidden');
+  $('dl-area').innerHTML = '';
+  try {
+    $('estatus').textContent = '🎬 Render ho raha hai... (video chal rahi hai, rukna mat)';
+    // hi-res offscreen canvas 1080x1920
+    const out = document.createElement('canvas'); out.width=1080; out.height=1920;
+    const octx = out.getContext('2d');
+    // swap stage ctx temporarily via proxy: render with scale factor
+    const stream = out.captureStream(30);
+    // audio: route video element audio into stream (once per element)
+    const AC = window.AudioContext || window.webkitAudioContext;
+    const ac = new AC();
+    let srcNode;
+    try {
+      srcNode = ac.createMediaElementSource(v);
+    } catch(e) {
+      // already connected from a previous export — reuse via existing dest
+      $('estatus').textContent = '⚠ Dobara export: page refresh karke try karein.';
+      ac.close(); S.exporting = false; btn.disabled = false; return;
+    }
+    const dest = ac.createMediaStreamDestination();
+    srcNode.connect(dest); srcNode.connect(ac.destination);
+    dest.stream.getAudioTracks().forEach(t=>stream.addTrack(t));
+    const rec = new MediaRecorder(stream, {mimeType: MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9,opus' : 'video/webm', videoBitsPerSecond: 8_000_000});
+    const chunks = [];
+    rec.ondataavailable = e=>{ if(e.data.size) chunks.push(e.data); };
+    const done = new Promise(res=>rec.onstop=res);
+    // render loop on offscreen ctx (reuse draw logic with scale)
+    const scale = 2;
+    v.muted = false; v.volume = 1;
+    const seekDone = new Promise(r=>{ v.onseeked = ()=>r(); });
+    v.currentTime = S.clip.start;
+    await seekDone;
+    await v.play();
+    rec.start(200);
+    await new Promise((resolve)=>{
+      const loop = ()=>{
+        const t = v.currentTime;
+        setProg('eprog', Math.min(99, (t - S.clip.start)/(S.clip.end - S.clip.start)*100));
+        ctx = octx; CW = 1080; CHH = 1920;   // draw hi-res
+        drawVideoFrame(v);
+        drawCaptions(t);
+        if (t >= S.clip.end || v.ended){ resolve(); return; }
+        requestAnimationFrame(loop);
+      };
+      loop();
+    });
+    rec.stop(); await done;
+    v.pause(); srcNode.disconnect();
+    ac.close();
+    const blob = new Blob(chunks, {type:'video/webm'});
+    const url = URL.createObjectURL(blob);
+    setProg('eprog', 100);
+    $('estatus').innerHTML = `✓ Short tayyar — ${(blob.size/1048576).toFixed(1)} MB`;
+    $('dl-area').innerHTML = `<a href="${url}" download="waqas-clip-short.webm"><button class="btn green">⬇ Download Short (.webm)</button></a>
+      <div class="hint">WebM format hai — WhatsApp/YouTube pe direct upload ho jata hai.</div>`;
+    $('step-export').classList.add('done');
+  } catch(err){ showErr('estatus', err); }
+  S.exporting = false; btn.disabled = false;
+};
+</script>
+</body>
+</html>
